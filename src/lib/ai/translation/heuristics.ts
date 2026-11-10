@@ -21,6 +21,8 @@ const IMPERATIVE_VERBS = new Set([
   "start", "zip", "wipe", "flush", "dry", "change", "remember", "behave", "apologise", "apologize",
   "swallow", "play", "touch", "kick", "let", "run", "quiet", "don't", "dont", "never", "do", "have", "watch",
   "follow", "answer", "ask", "choose", "pay", "set", "lay", "throw", "drop", "push", "pull", "speak", "talk",
+  "water", "practise", "practice", "empty", "fold", "carry", "fetch", "find", "check", "sort", "learn", "draw", "sing",
+  "count", "spit", "rinse", "blow", "chew", "sleep", "rest", "cross", "join", "meet", "thank", "hug", "kiss",
 ]);
 
 const LEADING_FILLER =
@@ -51,7 +53,7 @@ type Rule = { type: DemandType; pattern: RegExp; explanation: string };
 
 const RULES: Rule[] = [
   // Direct instructions
-  { type: "direct_instruction", pattern: /\byou(?:'ve| have)? (?:need|have|got|ought) to\b|\byou must\b/i, explanation: "States an obligation directly, leaving no room to decline." },
+  { type: "direct_instruction", pattern: /\byou(?:'ve| have)? (?:need|have|got|ought) to\b|\byou must\b|\byou need\b/i, explanation: "States an obligation directly, leaving no room to decline." },
   { type: "direct_instruction", pattern: /\bi (?:need|want|told|asked) you to\b|\bdo as (?:you'?re|you are|i) (?:told|say)\b/i, explanation: "Tells the child exactly what the adult requires of them." },
   { type: "direct_instruction", pattern: /\bplease\b/i, explanation: "“Please” softens the tone but still marks the sentence as a request to comply with." },
 
@@ -71,7 +73,7 @@ const RULES: Rule[] = [
 
   // Questions that function as instructions
   { type: "question_as_instruction", pattern: /\b(?:can|could|will|would) you (?:please |just |at least )?\w+[^?]*\?/i, explanation: "Worded as a question, but the expected answer is to do it." },
-  { type: "question_as_instruction", pattern: /\b(?:are you going to|have you (?:done|brushed|washed|put|got|packed|finished|tidied|eaten|been)|shall we|why (?:haven'?t|aren'?t|can'?t|won'?t|don'?t|didn'?t) you|do you want to (?:go|get|put|come|try|have|do|start|eat|brush|tidy)|where (?:are|is) your|did you hear|what did i (?:say|tell)|is that how|how many times)\b[^?]*\?/i, explanation: "A question that is really checking on or prompting compliance." },
+  { type: "question_as_instruction", pattern: /\b(?:are you going to|have you (?:done|brushed|washed|put|got|packed|finished|tidied|eaten|been)|shall we|why (?:haven'?t|aren'?t|can'?t|won'?t|don'?t|didn'?t) you|do you want to (?:go|get|put|come|try|have|do|start|eat|brush|tidy)|where (?:are|is) your|did you hear|what did i (?:say|tell)|what do you say|is that how|how many times)\b[^?]*\?/i, explanation: "A question that is really checking on or prompting compliance." },
 
   // Conditional language
   { type: "conditional_language", pattern: /\bif you (?:don'?t|do not|can'?t|won'?t|keep|carry on|stop|eat|finish|tidy|get|put|brush|are|behave|do)\b|\bor else\b|\botherwise\b|\bunless you\b|\bno \w+(?: \w+)? (?:until|unless)\b|\b(?:not|nothing|won'?t|can'?t) [^.?!]*\buntil you\b|\bthen you can\b|\bonly if\b|\bas long as you\b|\bwhen you(?:'ve| have) [^.?!]*,? (?:then |you can)\b|\bfirst [^.?!]*,? then\b|\bor (?:there'?ll|there will|you won'?t|i'?ll|i will|we won'?t|we'?re not|no)\b/i, explanation: "Makes something the child wants depend on compliance, which can feel like a threat or a bargain." },
@@ -80,7 +82,7 @@ const RULES: Rule[] = [
   { type: "loss_of_control", pattern: /\bbecause i said\b|\bi said (?:so|no)\b|\byou(?:'re| are) (?:coming|going|doing|wearing|eating|not (?:going|having|allowed|doing|staying))\b|\byou will\b|\byou'?ll (?:do|have to|wear|eat|go|come)\b|\bi(?:'m| am) (?:taking|turning|switching|putting|going to (?:take|turn|switch|carry|count))\b|\bi(?:'ll| will) (?:take|turn|switch|carry) \b|\bno (?:more|arguing|buts|discussion|excuses)\b|\bthat'?s (?:final|it|enough)\b|\byou can'?t\b|\b(?:you'?re|you are) not allowed\b|\bnot negotiable\b|\bend of (?:story|discussion)\b|\bi don'?t care\b|\benough\b/i, explanation: "Signals that the adult has taken the decision out of the child’s hands." },
 
   // Transitions
-  { type: "transition", pattern: /\bstop (?:playing|watching|what you(?:'re| are) doing|that game|the game)\b|\b(?:turn|switch) (?:it|that|the \w+|your \w+)? ?off\b|\b(?:turn|switch) off\b|\bfinish(?:ed)? (?:up|now|your|the|that)\b|\btime to (?:go|leave|stop|come|get|finish)\b|\bwe(?:'re| are) (?:going|leaving|off)\b|\b(?:leave|leaving)\b|\bput (?:it|that|the \w+|your \w+) (?:down|away)\b|\bcome (?:in|inside|here|down|downstairs|off|out|on in|back|away|and)\b|\bget (?:in|into|out|off|up|ready|dressed|down)\b|\bbed ?time\b|\bhome ?time\b|\bpack (?:up|away)\b|\boff (?:the|your) (?:tablet|ipad|phone|game|xbox|switch|tv|telly|computer|screen)\b|\bgo (?:to|and|upstairs|outside|inside)\b/i, explanation: "Asks for a switch from one activity or place to another, which is often hard." },
+  { type: "transition", pattern: /\bstop (?:playing|watching|what you(?:'re| are) doing|that game|the game)\b|\b(?:turn|switch) (?:\w+ ){0,3}off\b|\bfinish(?:ed)? (?:up|now|your|the|that)\b|\btime to (?:go|leave|stop|come|get|finish)\b|\bwe(?:'re| are) (?:going|leaving|off)\b|\b(?:leave|leaving)\b|\bput (?:it|that|the \w+|your \w+) (?:down|away)\b|\bcome (?:in|inside|here|down|downstairs|off|out|on in|back|away|and)\b|\bget (?:in|into|out|off|up|ready|dressed|down)\b|\bbed ?time\b|\bhome ?time\b|\bpack (?:up|away)\b|\boff (?:the|your) (?:tablet|ipad|phone|game|xbox|switch|tv|telly|computer|screen)\b|\bgo (?:to|and|upstairs|outside|inside)\b/i, explanation: "Asks for a switch from one activity or place to another, which is often hard." },
 
   // Social expectations
   { type: "social_expectation", pattern: /\bsay (?:sorry|thank ?you|thanks|please|hello|hi|goodbye|bye)\b|\bbe (?:nice|kind|polite|good|sensible|quiet|friendly|gentle|a good)\b|\bshare\b|\beveryone(?: else)?\b|\bother (?:children|kids|people)\b|\bpeople are (?:looking|watching|staring)\b|\bmanners\b|\bbehave\b|\bgood (?:boy|girl)\b|\blook at me\b|\bembarrass\w*\b|\bwhat will \w+ think\b|\blike your (?:brother|sister|friends?)\b|\bnicely\b|\bproperly\b|\brude\b|\btake turns\b|\bgive \w+ a (?:hug|kiss|cuddle)\b/i, explanation: "Relies on social rules or comparison with others, which adds expectation." },
@@ -133,7 +135,12 @@ export function detectDemandsHeuristic(text: string): HeuristicDemandAnalysis {
     triggers.push({ type, phrase: clean, explanation });
   };
 
-  for (const sentence of splitSentences(text)) {
+  // Sentences, plus later clauses introduced by a comma ("…, just get your shoes on").
+  const clauses = splitSentences(text).flatMap((sentence) => {
+    const [first, ...rest] = sentence.split(/,\s+/);
+    return [first, ...rest.map((clause) => (sentence.trim().endsWith("?") && !clause.endsWith("?") ? `${clause}?` : clause))];
+  });
+  for (const sentence of clauses) {
     const verb = leadingImperative(sentence);
     if (verb && !sentence.trim().endsWith("?")) {
       add(

@@ -51,8 +51,8 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <Card className="lg:col-span-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        <Card className="min-w-0 lg:col-span-3">
           <CardHeader className="flex-row items-center justify-between">
             <CardTitle>Recent translations</CardTitle>
             {translations.length > 0 ? <Button asChild variant="link" size="sm"><Link href="/history">View all</Link></Button> : null}
@@ -65,7 +65,7 @@ export default function DashboardPage() {
                 {translations.slice(0, 4).map((t) => (
                   <li key={t.id}>
                     <Link href={`/translator?reopen=${t.id}`} className="flex items-center justify-between gap-3 rounded-xl py-3 hover:bg-sage-50/60">
-                      <span className="min-w-0">
+                      <span className="min-w-0 flex-1">
                         <span className="block truncate font-medium text-ink-900">“{truncate(t.original, 70)}”</span>
                         <span className="text-xs text-ink-500">{formatRelative(t.createdAt)} · {t.result.alternatives.length} alternatives</span>
                       </span>
@@ -78,7 +78,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2">
+        <Card className="min-w-0 lg:col-span-2">
           <CardHeader><CardTitle>Selected child profile</CardTitle></CardHeader>
           <CardContent>
             {selectedChild ? (
@@ -108,7 +108,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader className="flex-row items-center justify-between">
             <CardTitle>Saved translations</CardTitle>

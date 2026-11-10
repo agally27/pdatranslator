@@ -178,8 +178,8 @@ export function Specialist() {
     conversations,
     activeId,
     onSelect: (id: string) => { setActiveId(id); setListOpen(false); },
-    onRename: (c: Conversation) => { setRenameValue(c.title); setRenaming(c); },
-    onDelete: (c: Conversation) => setDeleting(c),
+    onRename: (c: Conversation) => { setListOpen(false); setRenameValue(c.title); setRenaming(c); },
+    onDelete: (c: Conversation) => { setListOpen(false); setDeleting(c); },
   };
 
   return (

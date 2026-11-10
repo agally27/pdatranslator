@@ -1,12 +1,19 @@
 {
-  "name": "pdatmp",
+  "name": "pda-companion",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:quality": "vitest run tests/quality",
+    "test:e2e": "node tests/e2e/smoke.mjs",
+    "seed:knowledge": "tsx scripts/seed-knowledge.ts",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.7.0",
@@ -40,7 +47,11 @@
     "jsdom": "^31.0.0",
     "playwright": "^1.63.0",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }

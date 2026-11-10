@@ -142,7 +142,7 @@ function Frame({ children }: { children: React.ReactNode }) {
       <div className="sticky top-0 z-20 flex h-14 items-center justify-between gap-3 border-b border-ink-100/70 bg-cream-50/85 px-4 backdrop-blur sm:px-6 lg:px-10">
         <Link href="/dashboard" className="lg:hidden" aria-label="PDA Companion dashboard"><Brand /></Link>
         <span className="hidden text-sm text-ink-500 lg:block">Communication. Understanding. Connection.</span>
-        <ChildSwitcher className="max-w-[46vw] sm:max-w-xs" />
+        <ChildSwitcher className="min-w-0 max-w-[40vw] sm:max-w-xs" />
       </div>
       <main id="main" className="mx-auto w-full max-w-5xl px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-12 lg:pt-8">
         {children}

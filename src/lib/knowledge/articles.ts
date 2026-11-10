@@ -241,7 +241,7 @@ export const ARTICLES: KnowledgeArticle[] = [
     content: [
       "A transition – leaving the house, switching off a screen, coming in from the garden – asks a child to stop something, let go of control, face uncertainty about what comes next, and start something new. Each part is a demand, which is why transitions are among the hardest moments of the day for many PDA children.",
       "Approaches recommended for PDA apply directly: share what is coming as information rather than instruction, allow extra time, and hand over control of how the ending happens. Countdowns and timers help some autistic children but can feel like mounting pressure to PDA children; notice which is true for yours.",
-      "A bridge between activities can help: something from the current activity that comes along (a toy, the game’s music, a conversation about it), or a role for the child in the next step.",
+      "A bridge between activities can help: something from the current activity that comes along (a toy, the game’s music, a conversation about it), or a role for the child in the next step. This article is general guidance that applies the PDA Society’s recommended approaches to transitions; it is not based on research into transitions specifically.",
     ],
     practicalExamples: [
       "“The game is finishing for today. You know the best stopping point – a save point, or the end of this level.”",
