@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { describe, expect, it, vi } from "vitest";
 import { extractJson, parseWithSchema, withRetry, withTimeout } from "@/lib/ai/json";
 import { mapAnthropicError, AnthropicProvider } from "@/lib/ai/providers/anthropic";

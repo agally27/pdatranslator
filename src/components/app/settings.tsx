@@ -92,7 +92,8 @@ export function SettingsView() {
       }
       await auth.signOut();
       if (note) window.alert(note);
-      // Full navigation so no in-memory data survives.
+      // Full page load (not a client transition) so no in-memory data survives.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
       window.location.assign("/");
     } catch {
       toast("We couldn’t delete everything just now. Please try again.", "error");

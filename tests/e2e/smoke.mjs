@@ -182,7 +182,7 @@ try {
 
   // ── Settings ──────────────────────────────────────────────────────────────
   await page.goto(`${BASE}/settings`);
-  await page.getByText("AI model").waitFor();
+  await page.getByText("AI model – not configured").waitFor();
   check("settings explains which services are connected", (await page.locator("li", { hasText: "not configured" }).count()) === 3);
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download my data" }).click();

@@ -5,6 +5,8 @@ import { AuthProvider, DEMO_SESSION_KEY, useAuth } from "@/lib/auth/auth-context
 
 let api: ReturnType<typeof useAuth>;
 function Probe() {
+  // Test probe: exposes the hook's API to the test body.
+  // eslint-disable-next-line react-hooks/globals
   api = useAuth();
   return <p data-testid="state">{api.loading ? "loading" : api.user ? `in:${api.user.id}:${api.user.isDemo}` : "out"}</p>;
 }
