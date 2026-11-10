@@ -70,7 +70,7 @@ export const TOPICS: Topic[] = [
       "Hot. I've got it — safe spot's here.",
     ],
     { safety: { note: "This involves a physical hazard. If there is immediate danger, move the hazard or the child first; direct words are appropriate in an emergency." } }),
-  t("hurting", "safety", /\b(hit|hits|hitting|kick|kicks|kicking|bite|bites|biting|hurt|hurts|hurting|punch|pinch|scratch|smack|throwing|throw (that|it|things)|push(ing)? (him|her|your|them))\b/i,
+  t("hurting", "safety", /\b(hit|hits|hitting|kick|kicks|kicking|biting|bit(e|es)? (him|her|me|your|the|them)|hurt|hurts|hurting|punch|pinch|scratch|smack|throwing|throw (that|it|things)|push(ing)? (him|her|your|them))\b/i,
     "The adult wants to stop someone getting hurt.", "Keeping everyone safe when someone is being hurt.", "keeping everyone safe from hurting", ["hurt", "safe", "hit", "kick", "bite", "space", "bodies"],
     [
       "I can see things have got really big. Hitting hurts, so I'm moving in between to keep everyone safe.",
@@ -92,7 +92,7 @@ export const TOPICS: Topic[] = [
       "Staying close together. I'm here.",
     ],
     { autonomyNoChoice: "Staying where we can see each other is the safety rule here. How you do that is yours to decide.", safety: { note: "This involves physical safety. If a child is in immediate danger, go to them and act first; direct words are appropriate in an emergency." } }),
-  t("medicine", "medical", /\b(medicine|medication|calpol|inhaler|antibiotics?|eye ?drops|cream|take your tablets?|vitamins?|plaster)\b/i,
+  t("medicine", "medical", /\b(medicine|medication|calpol|inhaler|antibiotics?|eye ?drops|(?<!sun |sun|ice )cream|take your tablets?|vitamins?|plaster)\b/i,
     "The adult needs the child to have their medicine or treatment.", "The medicine being taken.", "having the medicine", ["medicine", "inhaler", "cream", "tablet"],
     [
       "The medicine is ready on the side. It's the one that helps your body feel better.",
@@ -227,7 +227,7 @@ export const TOPICS: Topic[] = [
     ]),
 
   // ── Eating and drinking ───────────────────────────────────────────────────
-  t("trynew", "eating", /\b(vegetables?|veg|broccoli|peas|carrots?|try (it|some|a|one|this)|taste|just one bite|one more (bite|mouthful)|eat (it|them) (all|up)|clear your plate|finish (your|what'?s on your) (dinner|plate|food|lunch|breakfast|tea))\b/i,
+  t("trynew", "eating", /\b(vegetables?|veg|broccoli|peas|carrots?|tr(y|ied) (it|some|a|one|this)|taste|\bbite\b|mouthful|one more (bite|mouthful)|eat (it|them) (all|up)|clear your plate|finish (your|what'?s on your) (dinner|plate|food|lunch|breakfast|tea))\b/i,
     "The adult would like the child to eat or try the food.", "The child eating enough or trying something.", "eating the food", ["food", "plate", "eat", "veg", "taste", "try", "peas", "carrots", "broccoli"],
     [
       "There are a few different things on the plate tonight. The peas are the sweet kind.",
@@ -409,7 +409,7 @@ export const TOPICS: Topic[] = [
     { autonomyNoChoice: "We're heading out, and how the leaving happens can go your way. I'll follow your lead." }),
 
   // ── Family life ───────────────────────────────────────────────────────────
-  t("tidy", "everyday", /\b(tidy|clean up|clear up|put (your|the|those|them) (toys|things|lego|stuff|books|clothes)? ?away|mess|messy|pick (up|those|them|your)|hang (up|your)|washing basket|plate (in|to) the)\b/i,
+  t("tidy", "everyday", /\b(tidy(ing)?|clean up|clear up|put (your|the|those|them) (toys|things|lego|stuff|books|clothes)? ?away|mess|messy|pick (up|those|them|your)|hang (up|your)|washing basket|plate (in|to) the)\b/i,
     "The adult would like things to be tidied away.", "The space being tidied.", "tidying up", ["floor", "toys", "tidy", "box", "away", "lego", "things", "room"],
     [
       "There are a lot of toys on the floor and I keep nearly standing on them. The box is over here.",

@@ -4,7 +4,13 @@ import * as Menu from "@radix-ui/react-dropdown-menu";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export const DropdownMenu = Menu.Root;
+/**
+ * Non-modal by default: a modal menu that opens a Dialog can leave the page
+ * with pointer events disabled after both close.
+ */
+export function DropdownMenu({ modal = false, ...props }: React.ComponentPropsWithoutRef<typeof Menu.Root>) {
+  return <Menu.Root modal={modal} {...props} />;
+}
 export const DropdownMenuTrigger = Menu.Trigger;
 
 export function DropdownMenuContent({ className, sideOffset = 6, ...props }: React.ComponentPropsWithoutRef<typeof Menu.Content>) {

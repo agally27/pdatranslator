@@ -92,7 +92,8 @@ export function SettingsView() {
       }
       await auth.signOut();
       if (note) window.alert(note);
-      router.replace("/");
+      // Full navigation so no in-memory data survives.
+      window.location.assign("/");
     } catch {
       toast("We couldn’t delete everything just now. Please try again.", "error");
       setBusy(false);

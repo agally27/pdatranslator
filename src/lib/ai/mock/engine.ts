@@ -157,7 +157,7 @@ const STATEMENT_BANK: Bank = {
     (s) => `${capitalise(s)}. That's all there is to it, and I'm with you the whole way through.`,
     (s) => `${capitalise(s)}. Nothing else is changing, and I'm right here.`,
   ],
-  minimal: [(s) => `${capitalise(s)}.`, (s) => `Just so you know: ${s}.`],
+  minimal: [(s) => `Just so you know: ${s}.`, (s) => `For information: ${s}.`],
 };
 
 function lowerFirst(text: string): string {
@@ -168,10 +168,11 @@ function bankFor(core: Core): { bank: Bank; subject: string } {
   if (core.kind === "instruction") return { bank: INSTRUCTION_BANK, subject: core.activity };
   if (core.kind === "prohibition") return { bank: PROHIBITION_BANK, subject: core.activity };
   const cleaned = sanitiseStatement(core.statement);
-  const safe = lintAlternative(`${capitalise(cleaned)}.`, { style: "descriptive" }).filter(
-    (i) => i.check !== "natural",
-  );
-  return { bank: STATEMENT_BANK, subject: safe.length === 0 && cleaned ? lowerFirst(cleaned) : "something is coming up that I'd like you to know about" };
+  // Only repeat the parent's own sentence if it carries no demand features itself.
+  const safe =
+    lintAlternative(`${capitalise(cleaned)}.`, { style: "descriptive" }).filter((i) => i.check !== "natural").length === 0 &&
+    detectDemandsHeuristic(cleaned).triggers.length === 0;
+  return { bank: STATEMENT_BANK, subject: safe && cleaned ? lowerFirst(cleaned) : "something is coming up that I'd like you to know about" };
 }
 
 function baseText(style: StyleId, topic: Topic | null, core: Core, variant: number, noChoice: boolean): string {

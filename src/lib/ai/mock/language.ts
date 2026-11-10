@@ -12,7 +12,8 @@ export function gerund(verb: string): string {
   if (v.endsWith("ing")) return v;
   if (v === "be") return "being";
   if (v.endsWith("ie")) return `${v.slice(0, -2)}ying`;
-  if (DOUBLING.has(v)) return `${v}${v.slice(-1)}ing`;
+  // Short consonant-vowel-consonant verbs double the final letter (slam → slamming).
+  if (DOUBLING.has(v) || /^[^aeiou]*[aeiou][^aeiouwxy]$/.test(v)) return `${v}${v.slice(-1)}ing`;
   if (v.endsWith("e") && !/(ee|ye|oe)$/.test(v)) return `${v.slice(0, -1)}ing`;
   return `${v}ing`;
 }

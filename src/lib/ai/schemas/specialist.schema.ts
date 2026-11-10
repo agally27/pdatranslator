@@ -23,7 +23,7 @@ export const ChatRequestSchema = z.object({
     )
     .min(1)
     .max(40)
-    .refine((m) => m[m.length - 1].role === "user", "The last message must be from the user."),
+    .refine((m) => m.length === 0 || m[m.length - 1].role === "user", "The last message must be from the user."),
   childContext: ChildContextSchema.nullish(),
   preferences: z.array(ConfirmedPreferenceSchema).max(30).default([]),
 });
