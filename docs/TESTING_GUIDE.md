@@ -23,6 +23,17 @@ If Chromium is not installed: `npx playwright install chromium`.
 
 All tests run with no credentials; `tests/setup.ts` clears every relevant environment variable before each test.
 
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `main`:
+
+| Job | Steps |
+| --- | --- |
+| Lint, typecheck, test and build | `npm ci`, `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` |
+| End-to-end (demo mode) | builds, starts the server on port 3100, runs `npm run test:e2e`; on failure uploads screenshots and the server log as the `e2e-failure` artifact |
+
+CI needs no secrets: everything runs in demo mode. To block merging on red CI, enable branch protection on `main` (Settings → Branches) and require both jobs.
+
 ## What is covered
 
 | Area | Where |
