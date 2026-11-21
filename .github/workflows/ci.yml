@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, typecheck, test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit, API, security and quality tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+  e2e:
+    name: End-to-end (demo mode)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: |
+          npm run start -- -p 3100 > server.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3100/api/health > /dev/null; then echo "Server is up"; exit 0; fi
+            sleep 1
+          done
+          echo "Server did not start"; cat server.log; exit 1
+
+      - name: Run end-to-end smoke test
+        env:
+          BASE_URL: http://localhost:3100
+          SCREENSHOT_DIR: e2e-screenshots
+        run: npm run test:e2e
+
+      - name: Upload screenshots and server log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-failure
+          path: |
+            e2e-screenshots/
+            server.log
+          retention-days: 7
